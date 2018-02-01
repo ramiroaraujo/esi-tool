@@ -1,0 +1,20 @@
+version: '3'
+services:
+  ets:
+    image: "akamaiesi/ets-docker:latest"
+    container_name: ets
+    environment:
+        - ETS_CLI_ARGS=--remote_origin list.localhost --remote_origin intl.esperanto-l.mtvi.com --geo intl.esperanto-l.mtvi.com:country_code=US
+    ports:
+        - "8000:80"
+    extra_hosts:
+        - "list.localhost:192.168.65.2"
+        - "intl.esperanto-l.mtvi.com:192.168.65.2"
+  origin:
+    image: nginx
+    container_name: origin
+    volumes:
+    - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+        - "8080:80"
+    
